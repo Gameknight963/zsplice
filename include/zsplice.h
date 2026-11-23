@@ -1,7 +1,7 @@
 #ifndef ZSPLICE_H
 #define ZSPLICE_H
 
-#include <cstdint>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,13 +16,21 @@ extern "C" {
 #endif
 
 typedef struct ZModInfo {
-    const char* Name = "Unnamed Mod";
-    const char* Version = "1.0.0";
-    const char* Author = "<no author>";
-    const int32_t AuthourColor = 0xff525252;
+    const char* Name;
+    const char* Version;
+    const char* Author;
+    int32_t AuthorColor;
 } ZModInfo;
 
-// Required method exports for zsplice mod
+ZModInfo ZSplice_CreateDefaultInfo(void)
+{
+    ZModInfo info;
+    info.Name = "Unnamed Mod";
+    info.Version = "1.0.0";
+    info.Author = "<no author>";
+    info.AuthorColor = 0xff525252;
+    return info;
+}
 
 // Only use this to return your ZModInfo, don't perform other work
 ZSPLICE_EXPORT extern ZModInfo ZSPLICE_CALL ZSplice_GetInfo(void);
@@ -32,5 +40,6 @@ ZSPLICE_EXPORT extern void ZSPLICE_CALL ZSplice_ModInit(void);
 
 #ifdef __cplusplus
 }
+#endif
 
 #endif
