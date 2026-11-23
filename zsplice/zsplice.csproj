@@ -28,6 +28,7 @@
 
 	<ItemGroup>
 		<Compile Include="Core.cs" />
+		<Compile Include="Extensions\NativeLibraryExtensions.cs" />
 		<Compile Include="NativeMod.cs" />
 		<Compile Include="ZModInfo.cs" />
 		<Content Include="Directory.Build.props" />
