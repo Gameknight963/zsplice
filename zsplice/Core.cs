@@ -1,6 +1,8 @@
 ﻿using MelonLoader;
+using MelonLoader.Logging;
 using MelonLoader.Utils;
 using System.Runtime.InteropServices;
+using System.IO;
 
 [assembly: MelonInfo(typeof(zsplice.Core), "zsplice", "1.0.0", "gameknight963")]
 [assembly: MelonAuthorColor(255, 86, 65, 157)]
@@ -30,19 +32,20 @@ namespace zsplice
                 // Register the mod
                 ZModInfo info = lib.GetExport<ZSplice_GetInfo>("ZSplice_GetInfo")();
                 nativeMods.Add(new NativeMod(info, lib));
-                LogMelonInfo(info);
+                LogMelonInfo(info, Path.GetFileName(path));
 
                 // Initialize the mod
                 lib.GetExport<ZSplice_ModInit>("ZSplice_ModInit")();
             }
         }
 
-        private static void LogMelonInfo(ZModInfo info)
+        private static void LogMelonInfo(ZModInfo info, string? libFile = null)
         {
-            MelonLogger.Msg("------------------------------");
-            MelonLogger.Msg($"{info.GetName()} v{info.GetVersion()}");
-            MelonLogger.MsgPastel(info.GetAuthorColor(), $"by {info.GetAuthor()}");
-            MelonLogger.Msg("------------------------------");
+            MelonLogger.MsgDirect(ColorARGB.Green, "------------------------------");
+            MelonLogger.MsgDirect(ColorARGB.LightGray, $"{info.GetName()} v{info.GetVersion()}");
+            MelonLogger.MsgDirect(info.GetAuthorColor(), $"by {info.GetAuthor()}");
+            if (libFile != null) MelonLogger.MsgDirect(ColorARGB.Gray, $"Library file: {libFile}");
+            MelonLogger.MsgDirect(ColorARGB.Green, "------------------------------");
         }
     }
 }
