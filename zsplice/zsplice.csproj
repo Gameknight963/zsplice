@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>zsplice</RootNamespace>
+		<LangVersion>default</LangVersion>
+		<IsPackable>false</IsPackable>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<AssemblyName>zsplice</AssemblyName>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="MelonLoader">
+			<HintPath>$(LoaderAssembliesPath)/MelonLoader.dll</HintPath>
+		</Reference>
+
+	</ItemGroup>
+
+	<PropertyGroup>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="Core.cs" />
+		<Compile Include="NativeMod.cs" />
+		<Compile Include="ZModInfo.cs" />
+		<Content Include="Directory.Build.props" />
+	</ItemGroup>
+	
+	<Target Name="DeployOutput" AfterTargets="Build" Condition="'$(DeployOnBuild)' == 'true'">
+		<Error Condition="'$(GamePath)' == '' Or !Exists('$(GamePath)')" Text="Set GamePath to an existing game installation or disable DeployOnBuild." />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GamePath)/Plugins" SkipUnchangedFiles="true" />
+	</Target>
+</Project>
