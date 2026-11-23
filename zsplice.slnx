@@ -2,5 +2,6 @@
   <Folder Name="/include/">
     <File Path="include/zsplice.h" />
   </Folder>
+  <Project Path="Example/Example.vcxproj" Id="f196c9c8-81fb-414c-9a4a-b06ace49bea2" />
   <Project Path="zsplice/zsplice.csproj" />
 </Solution>
