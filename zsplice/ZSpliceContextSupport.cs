@@ -12,8 +12,8 @@ namespace zsplice
         public static readonly byte* GameVersion = AllocCString(UnityInformationHandler.GameVersion);
         public static readonly byte* MelonLoaderVersion = AllocCString(MelonLoader.Properties.BuildInfo.Version);
 
-        public const int ApiMajor = 1;
-        public const int ApiMinor = 0;
+        public const int ApiMajor = 0;
+        public const int ApiMinor = 1;
         public const int ApiPatch = 0;
 
         public static readonly Msg_t MsgCallback = OnMessage;
