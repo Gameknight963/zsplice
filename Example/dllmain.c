@@ -21,11 +21,16 @@ BOOL APIENTRY DllMain(
 // Only use this to return your ZModInfo, don't perform other work
 ZSPLICE_EXPORT ZModInfo ZSPLICE_CALL ZSplice_GetInfo(void)
 {
-    return ZSplice_CreateDefaultInfo();
+    ZModInfo info;
+    info.Name = "Unnamed Mod";
+    info.Version = "1.0.0";
+    info.Author = "<no author>";
+    info.AuthorColor = 0xff525252;
+    return info;
 }
 
 // Initialize your mod here
-ZSPLICE_EXPORT void ZSPLICE_CALL ZSplice_ModInit(void)
+ZSPLICE_EXPORT void ZSPLICE_CALL ZSplice_ModInit(ZModCtx ctx)
 {
-    printf("hello");
+    ctx.Msg("hello");
 }

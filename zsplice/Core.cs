@@ -1,7 +1,6 @@
 ﻿using MelonLoader;
 using MelonLoader.Logging;
 using MelonLoader.Utils;
-using System.Runtime.InteropServices;
 using zsplice.Extensions;
 
 [assembly: MelonInfo(typeof(zsplice.Core), "zsplice", "1.0.0", "gameknight963")]
@@ -17,12 +16,6 @@ namespace zsplice
         public IReadOnlyList<NativeMod> NativeMods => nativeMods;
         private readonly List<NativeMod> nativeMods = new();
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        delegate ZModInfo ZSplice_GetInfo();
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        delegate ZModInfo ZSplice_ModInit();
-
         public override void OnPreModsLoaded()
         {
             foreach (string path in Directory.GetFiles(NativeModsPath, "*.dll"))
@@ -31,11 +24,11 @@ namespace zsplice
 
                 if (lib.TryGetExport("ZSplice_GetInfo", out ZSplice_GetInfo export))
                 {
-                    ZModInfo info;
-                    info = export();
-                    nativeMods.Add(new NativeMod(info, lib));
+                    ZModInfo info = export();
+                    NativeMod mod = new(info, lib);
+                    nativeMods.Add(mod);
                     LogMelonInfo(info, path);
-                    lib.GetExport<ZSplice_ModInit>("ZSplice_ModInit")();
+                    if (lib.TryGetExport("ZSplice_ModInit", out ZSplice_ModInit init)) init(mod.CreateCtx());
                     continue;
                 }
                 LogMelonInfo(path);

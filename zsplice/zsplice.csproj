@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -18,6 +18,9 @@
 		<Reference Include="MelonLoader">
 			<HintPath>$(LoaderAssembliesPath)/MelonLoader.dll</HintPath>
 		</Reference>
+		<Reference Include="0Harmony">
+			<HintPath>$(LoaderAssembliesPath)/0Harmony.dll</HintPath>
+		</Reference>
 
 	</ItemGroup>
 
@@ -27,11 +30,25 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Include="Architecture.cs" />
 		<Compile Include="Core.cs" />
+		<Compile Include="delegates.cs" />
 		<Compile Include="Extensions\NativeLibraryExtensions.cs" />
+		<Compile Include="HarmonyStatus.cs" />
+		<Compile Include="NativeHookBridge.cs" />
 		<Compile Include="NativeMod.cs" />
+		<Compile Include="RuntimeType.cs" />
+		<Compile Include="ZModCtx.cs" />
 		<Compile Include="ZModInfo.cs" />
+		<Compile Include="ZSpliceContextSupport.cs" />
 		<Content Include="Directory.Build.props" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="PolySharp" Version="1.17.1">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	</ItemGroup>
 	
 	<Target Name="DeployOutput" AfterTargets="Build" Condition="'$(DeployOnBuild)' == 'true'">
